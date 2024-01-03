@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import musicImg from "../assets/WHRW_logo.png";
-import LastFM from "./lastfm.api.js";
 import SpotifyWebApi from "./spotify-web-api.js";
 function NavBar({ addFromNav, switchView }) {
   const [song, setSong] = useState("");
@@ -17,19 +16,10 @@ function NavBar({ addFromNav, switchView }) {
     justifyContent: "center",
   };
 
-  var lastfm = new LastFM({
-    apiKey: "c3fa06d5b0717e3f0ba6689169e69b51",
-    apiSecret: "7651ae59bf1e759ab56e9bf7850d0873",
-  });
-  const imgKey = "#text";
-  let imgurl: string = "";
-
   const CLIENT_ID = "e4bde08194004aa8a268030612b16410";
 
   const CLIENT_SECRET = "c7c6af7b238146cbab83f4d02b445cd3";
   const [token, setToken] = useState("");
-
-  
 
   useEffect(() => {
     var authParameters = {
@@ -44,16 +34,20 @@ function NavBar({ addFromNav, switchView }) {
         CLIENT_SECRET,
     };
     var spotifyApi = new SpotifyWebApi();
-    var tok;
+
     fetch("https://accounts.spotify.com/api/token", authParameters)
       .then((result) => result.json())
       .then((data) => setToken(data.access_token));
-    
-    console.log(token);
+    var searchQuery;
+    if (album) {
+      searchQuery = artist + " " + album;
+    } else {
+      searchQuery = artist + " " + song;
+    }
 
-    setTimeout(spotifyApi.setAccessToken(token),1200);
+    spotifyApi.setAccessToken(token);
     console.log(album);
-    spotifyApi.searchAlbums(artist + " " + album).then(
+    spotifyApi.searchAlbums(searchQuery).then(
       function (data) {
         setImage(data.albums.items[0].images[0].url);
       },
@@ -61,7 +55,7 @@ function NavBar({ addFromNav, switchView }) {
         console.error(err);
       },
     );
-  }, [album]);
+  }, [artist, album]);
 
   const handleSubmit = (a: string, b: string, c: string, e: Event) => {
     if (a == "" || b == "") {
@@ -74,6 +68,9 @@ function NavBar({ addFromNav, switchView }) {
       }
       e.preventDefault();
       return null;
+    }
+    if (c == "") {
+      c = a;
     }
 
     var today = new Date();
@@ -90,10 +87,6 @@ function NavBar({ addFromNav, switchView }) {
     time =
       time.substring(0, time.length - 6) +
       time.substring(time.length - 3, time.length);
-
-    if (c === "") {
-      c = "Single";
-    }
 
     let songData = {
       songName: a,
@@ -113,21 +106,6 @@ function NavBar({ addFromNav, switchView }) {
     setAlbum("");
     setImage("");
   };
-
-  useEffect(() => {
-    lastfm.album.search(
-      { album: album },
-      {
-        success: function (data) {
-          imgurl = image;
-          console.log(data.results.albummatches.album[0]);
-        },
-        error: function (code, message) {
-          /* Show error message. */
-        },
-      },
-    );
-  }, [album]);
 
   return (
     <>

@@ -4,7 +4,13 @@ import NavBar from "./components/NavBar";
 import CardGroup from "./components/CardGroup";
 
 function App() {
-  function addFromNav(songData) {
+  function addFromNav(songData:  {
+    image: string;
+    songName: string;
+    artist: string;
+    album: string;
+    timePlayed: string;
+  }) {
     console.log(songData);
     let updatedSongList = [...allSongs];
     updatedSongList.unshift(songData);
@@ -30,19 +36,16 @@ function App() {
   const [listGroupView, setListGroupView] = useState(true);
 
   useEffect(() => {
-    // storing input name
     var songs_init = JSON.parse(localStorage.getItem("songs") || "");
-    var view_init = JSON.parse(localStorage.getItem("viewState") || "");
-    setAllSongs(songs_init);
+    var view_init = JSON.parse(localStorage.getItem("viewState") || "true");
+    songs_init && setAllSongs(songs_init);
     setListGroupView(view_init);
     console.log(songs_init);
   }, []);
   useEffect(() => {
-    // storing input name
     localStorage.setItem("songs", JSON.stringify(allSongs));
   }, [allSongs]);
   useEffect(() => {
-    // storing input name
     localStorage.setItem("viewState", JSON.stringify(listGroupView));
   }, [listGroupView]);
 
@@ -52,7 +55,7 @@ function App() {
       {listGroupView ? (
         <ListGroup handleDelete={handleDelete} songList={allSongs} />
       ) : (
-        <CardGroup songList={allSongs} />
+        <CardGroup handleDelete={handleDelete} songList={allSongs} />
       )}
     </div>
   );
