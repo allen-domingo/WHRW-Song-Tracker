@@ -11,15 +11,22 @@ function CardGroup({ songList, handleDelete }) {
     );
   };
 
-  const fontStyle = {
-    fontFamily: "Gill Sans MT",
+  const marqueeSongToggle = (s: string, isName: boolean) => {
+    if (s.length > 19 && s.length < 32 && isName) {
+      return <div className="group-hover:animate-marquee">{s}</div>;
+    } else if (s.length > 32 && isName) {
+      return <div className="group-hover:animate-marquee2">{s}</div>;
+    } else if (s.length > 31) {
+      return <div className="group-hover:animate-marquee">{s}</div>;
+    } else {
+      return s;
+    }
   };
-
 
   return (
     <>
       {getMessage}
-      <div className="container grid grid-cols-4 py-5">
+      <div className="container grid grid-cols-4 py-5 mt-8">
         {songList.map(
           (
             song: {
@@ -32,7 +39,7 @@ function CardGroup({ songList, handleDelete }) {
             index: number,
           ) => (
             <div
-              className="group max-w-sm scale-90 overflow-hidden truncate rounded py-3 shadow-lg transition-all duration-200 hover:scale-100"
+              className="font-newFont group max-w-sm scale-90 overflow-hidden truncate rounded py-3 shadow-lg transition-all duration-200 hover:scale-100"
               onMouseEnter={() => {
                 setSelectedIndex(index);
               }}
@@ -45,23 +52,21 @@ function CardGroup({ songList, handleDelete }) {
                 src={song.image}
                 alt="Album Cover"
               />
-              <div
-                className="object-scale-down px-6 py-2 pr-3"
-                style={fontStyle}
-              >
-                <div className="mb-1 line-clamp-2 text-ellipsis text-2xl font-bold">
+              <div className="object-scale-down px-6 py-2 pr-3">
+                <div className="mb-1  line-clamp-2 text-ellipsis text-2xl font-bold">
                   {" "}
-                    {song.songName}
-                  
+                  {marqueeSongToggle(song.songName, true)}
                 </div>
                 <p className="mb-1 overflow-clip text-xl text-gray-700 hover:overflow-auto">
                   {song.artist}
                 </p>
-                <p className=" text-gray-700">{song.album}</p>
+                <p className=" line-clamp-2 text-gray-700">
+                  {marqueeSongToggle(song.album, false)}
+                </p>
                 <small className="mt-1">{song.timePlayed}</small>
 
                 <button
-                  className="ml-24 scale-0 rounded-full border-2 border-gray-400 bg-transparent px-2 py-1 font-extrabold text-gray-400 opacity-55 transition-all duration-200 hover:opacity-100  group-hover:scale-90"
+                  className="scale-0 float-right mx-2 text-start rounded-full border-2 border-gray-400 bg-transparent px-2.5 py-1 font-extrabold text-gray-400 opacity-55 transition-all duration-200 hover:opacity-100  group-hover:scale-90"
                   onClick={() => {
                     handleDelete(selectedIndex);
                     setSelectedIndex(NaN);

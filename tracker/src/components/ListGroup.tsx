@@ -14,13 +14,13 @@ function ListGroup({ songList, handleDelete }) {
 
 
   return (
-    <>
+    <div className="mt-20">
       {getMessage()}
       <ul className="list-group shadow-md">
         {songList.map((song, index: number) => (
           <a
             href="#"
-            className="group w-full transform overflow-hidden  rounded-xl border-4 border-transparent bg-slate-700 px-3 py-1 font-sans text-white no-underline shadow-lg transition duration-150 ease-linear hover:bg-slate-800  "
+            className="group w-full transform overflow-hidden rounded-xl border-4 border-transparent bg-slate-700 px-3 py-1 font-sans text-white no-underline shadow-lg transition duration-150 ease-linear hover:bg-slate-800  "
             aria-current="true"
             onMouseEnter={() => {
               setSelectedIndex(index);
@@ -32,7 +32,6 @@ function ListGroup({ songList, handleDelete }) {
             <div className="w-100 justify-content-between hover:scale-y-1 flex items-center transition-all ease-linear">
               <h5 className="mb-1 ">
                 {song.songName}
-                {/*  | {song.artist} | {song.album} */}
               </h5>
               <small>{song.timePlayed}</small>
             </div>
@@ -52,7 +51,7 @@ function ListGroup({ songList, handleDelete }) {
           </a>
         ))}
       </ul>
-    </>
+    </div>
   );
 }
 

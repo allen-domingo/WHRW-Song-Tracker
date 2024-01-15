@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import musicImg from "../assets/WHRW_logo.png";
+import whrwsvg from "../assets/whrwsvg.svg";
 import SpotifyWebApi from "./spotify-web-api.js";
-function NavBar({ addFromNav, switchView }) {
+import { SiRoblox } from "react-icons/si";
+import { ImLinkedin } from "react-icons/im";
+
+function NavBar({ addFromNav, switchView, handleSide, sideOpen }) {
   const [song, setSong] = useState("");
   const [artist, setArtist] = useState("");
   const [album, setAlbum] = useState("");
@@ -9,16 +13,16 @@ function NavBar({ addFromNav, switchView }) {
   const [subNum, setSubNum] = useState(0);
 
   const logoStyle = {
-    fontSize: 40,
     fontFamily: "papyrus",
   };
   const inputStyle = {
     justifyContent: "center",
+    fontFamily: "Gill Sans MT",
   };
 
   const CLIENT_ID = "e4bde08194004aa8a268030612b16410";
 
-  const CLIENT_SECRET = "c7c6af7b238146cbab83f4d02b445cd3";
+  const CLIENT_SECRET = "0173bbc5a4304ac2b99ba7fda4acafad";
   const [token, setToken] = useState("");
 
   useEffect(() => {
@@ -108,29 +112,52 @@ function NavBar({ addFromNav, switchView }) {
   };
 
   return (
-    <>
-      <nav className="navbar bg-slate-600">
-        <div className="container" style={{ margin: "auto" }}>
-          <a className="text-black no-underline" style={logoStyle}>
-            <b>Skibidi Tracker</b>
-          </a>
+    <div className="shadow-lg z-10 w-full fixed">
+      <nav className=" mx-auto flex max-h-20 content-center items-center bg-gray-500 transition-all duration-300 ">
+        <div
+          className={` container-fluid flex h-20 w-auto content-center ${
+            sideOpen ? " " : ""
+          } `}
+        >
           <button
-            style={{ height: "5%", width: "5%" }}
+            className="m-3"
+            onClick={(e) => {
+              handleSide();
+            }}
+          >
+            <ImLinkedin className="h-8 w-8 fill-blue-600 transition-all hover:animate-spin" />
+          </button>
+          <button
+            className="m-2 h-16 w-16 fill-green-500 "
             onClick={(e) => {
               switchView();
             }}
           >
-            <img
-              className="transition-transform hover:scale-110"
-              src={musicImg}
-              alt=""
-            />
+            {
+              <img
+                className=" stroke-2 transition-transform hover:scale-110"
+                src={musicImg}
+                alt=""
+              />
+            }
           </button>
 
-          <div style={inputStyle}>
-            <form className="d-flex" role="submit">
+          <a
+            className={` m-2 flex items-center text-4xl text-black no-underline transition-all ${
+              sideOpen ? "" : ""
+            }`}
+            style={logoStyle}
+          >
+            <b className=" whitespace-nowrap text-center">Skibidi Tracker</b>
+          </a>
+
+          <div
+            className={` static flex items-center transition-all`}
+            style={inputStyle}
+          >
+            <form className={`  flex p-2`} role="submit">
               <input
-                className="form-control me-2 drop-shadow-md"
+                className="form-control me-2 drop-shadow-md "
                 type="Song"
                 placeholder="Song"
                 aria-label="Song"
@@ -154,7 +181,7 @@ function NavBar({ addFromNav, switchView }) {
                 value={album}
               ></input>
               <button
-                className="bg-transparent-500 cursor-pointer rounded-3xl border-2 border-green-500 px-4 py-2 text-green-500 transition-all duration-500 ease-in-out hover:rounded-md  hover:bg-green-500 hover:text-gray-100"
+                className="bg-transparent-500 cursor-pointer rounded-3xl border-2 border-green-600 px-4 py-2 text-green-600 transition-all duration-500 ease-in-out hover:rounded-md  hover:bg-green-600 hover:text-gray-200"
                 type="submit"
                 onClick={(e) => {
                   setSubNum(subNum + 1);
@@ -167,7 +194,7 @@ function NavBar({ addFromNav, switchView }) {
           </div>
         </div>
       </nav>
-    </>
+    </div>
   );
 }
 
