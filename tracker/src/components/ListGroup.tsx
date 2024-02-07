@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
-function ListGroup({ songList, handleDelete }) {
+function ListGroup({ songList, handleDelete, darkMode }) {
   const [selectedIndex, setSelectedIndex] = useState(Number.POSITIVE_INFINITY);
 
-
+  // displays message if there are no songs
   const getMessage = () => {
     return (
       songList.length === 0 && (
@@ -12,15 +13,17 @@ function ListGroup({ songList, handleDelete }) {
     );
   };
 
-
+  //maps song list to list group
   return (
-    <div className="mt-20">
+    <div className="mt-24">
       {getMessage()}
       <ul className="list-group shadow-md">
-        {songList.map((song, index: number) => (
+        {songList.map((song: string, index: number) => (
           <a
             href="#"
-            className="group w-full transform overflow-hidden rounded-xl border-4 border-transparent bg-slate-700 px-3 py-1 font-sans text-white no-underline shadow-lg transition duration-150 ease-linear hover:bg-slate-800  "
+            className={`group bottom-12 mb-1 ml-3 mr-4 mt-2 transform overflow-hidden border-b-8  border-r-8 border-solid bg-zinc-100 bg-clip-padding px-3 py-2 font-newFont text-black no-underline transition duration-200 hover:scale-95 dark:border-zinc-100 dark:border-opacity-5 dark:bg-black dark:text-zinc-100 ${
+              darkMode ? "" : "border-black border-opacity-50"
+            }`}
             aria-current="true"
             onMouseEnter={() => {
               setSelectedIndex(index);
@@ -30,24 +33,28 @@ function ListGroup({ songList, handleDelete }) {
             }}
           >
             <div className="w-100 justify-content-between hover:scale-y-1 flex items-center transition-all ease-linear">
-              <h5 className="mb-1 ">
+              <h5 className="select-text font-bold dark:text-zinc-100">
                 {song.songName}
               </h5>
-              <small>{song.timePlayed}</small>
+              <small className="select-none dark:text-zinc-100">
+                {song.timePlayed}
+              </small>
             </div>
-            <p className="mb-1 text-lg">{song.artist}</p>
-            <small>{song.album} </small>
-            <div className=" h-0 transition-all group-hover:h-12 ">
-              <button
-                className="my-2 scale-0 rounded-md bg-red-500 px-3 py-2 font-bold text-white transition ease-in-out  hover:bg-red-700  group-hover:scale-100"
-                onClick={() => {
-                  handleDelete(selectedIndex);
-                  setSelectedIndex(NaN);
-                }}
-              >
-                <img src="/spotify.png" alt=""></img>X
-              </button>
-            </div>
+            <p className="mb-1 select-text text-lg dark:text-zinc-100">
+              {song.artist}
+            </p>
+            <small className="select-text dark:text-zinc-100">
+              {song.album}{" "}
+            </small>
+            <button
+              className="float-right mt-0  rounded-full bg-transparent transition-all duration-200"
+              onClick={() => {
+                handleDelete(selectedIndex);
+                setSelectedIndex(NaN);
+              }}
+            >
+              <RiDeleteBin6Line className=" scale-0 transition-all group-hover:scale-150 dark:fill-slate-100" />
+            </button>
           </a>
         ))}
       </ul>
