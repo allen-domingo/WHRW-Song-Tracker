@@ -74,12 +74,17 @@ function NavBar({
     );
   }, [artist, album]);
 
-  const handleSubmit = (a: string, b: string, c: string, e: Event) => {
+  const handleSubmit = (
+    title: string,
+    artist: string,
+    album: string,
+    e: Event,
+  ) => {
     //checks for song/artist
-    if (a == "" || b == "") {
-      if (a == "" && b == "") {
+    if (title == "" || artist == "") {
+      if (title == "" && artist == "") {
         alert("No song name or artist entered");
-      } else if (a == "") {
+      } else if (title == "") {
         alert("No song name entered");
       } else {
         alert("No artist entered");
@@ -87,8 +92,8 @@ function NavBar({
       e.preventDefault();
       return null;
     }
-    if (c == "") {
-      c = a;
+    if (album == "") {
+      album = title;
     }
     //gets timestamp
     var today = new Date();
@@ -109,21 +114,21 @@ function NavBar({
 
     //sets info to search result if toggled on
     if (autoCorrect) {
-      a = spotSong;
-      b = spotArtist;
-      c = spotAlbum;
+      title = spotSong;
+      artist = spotArtist;
+      album = spotAlbum;
     }
     //sets up data for adding to song list
 
     let songData = {
-      songName: a,
-      artist: b,
-      album: c,
+      songName: title,
+      artist: artist,
+      album: album,
       timePlayed: time,
       image: image,
     };
     //adds to list/sheet and resets
-    EnterSheets(a, b, c, time, relaseDate, sheetsKey);
+    EnterSheets(title, artist, album, time, relaseDate, sheetsKey);
     addFromNav(songData);
     e.preventDefault();
     resetInput();
