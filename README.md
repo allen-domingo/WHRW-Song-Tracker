@@ -1,7 +1,7 @@
 # WHRW-Song-Tracker
 Song Tracker for charting @ WHRW Radio Station.
 
-This application was built for WHRW to provide capabilities to easily access the music played by the DJs on air, with a new look and some extra capabilities. The use by the DJs is simply to enter the song in the input field at the top, and the app can do the rest.
+This application was built for WHRW to provide capabilities to easily access the music played by the DJs on air, with a new look and some extra capabilities. The use by the DJs is simply to enter the song in the input field at the top, and with the metadata stored grabbed, displayed, and simultaneously stored in a Google Spreadsheet.
 
 ### Card View (Light Mode)
 
