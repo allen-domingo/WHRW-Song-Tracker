@@ -10,3 +10,6 @@ This application was built for WHRW to provide capabilities to easily access the
 ### List View (Dark Mode)
 
 <img width="960" alt="Screenshot 2024-02-08 124223" src="https://github.com/allen-domingo/WHRW-Song-Tracker/assets/112440034/5720a9ee-46d7-4a45-8c8f-5cc9d940e3a9">
+
+
+The application uses the Spotify TypeScript SDK to get the data for the album cover and the autocorrect. TailwindCSS is used for the front end design, while GoogleAPI authentication is handled by the Jose library, getting a temporary JSON web token using a service account and getting a temporary key for the fetch call to enter to the sheet.
